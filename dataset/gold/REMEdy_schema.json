@@ -1,0 +1,41 @@
+{
+  "MALICIOUS": {
+    "description": "Spans that express or imply malicious, dangerous, or harmful intent, including language, actions, or concepts designed to cause offense, harm, or illegal activity.",
+    "categories": {
+      "offensive language": "Language that is vulgar, insulting, degrading, or intended to offend individuals, groups, or entities.",
+      "hateful or discriminatory act": "An action or behavior motivated by hatred or unfair bias based on race, religion, gender, orientation, or other personal characteristics.",
+      "self harm or suicidal thoughts": "Expressions, behaviors, or ideations involving intentional self-injury or thoughts of taking one's own life.",
+      "digital crime and violation": "Any illegal, unethical, or unauthorized digital behavior, including hacking, phishing, identity theft, data leaks, or breaches of digital privacy. Encompasses both criminal acts and harmful privacy violations.",
+      "copyright violation": "Unauthorized use, reproduction, sharing, or distribution of copyrighted material, such as software, media, texts, or visual content, without permission from the rights holder.",
+      "harmful instrument": "Any object, device, or tool designed or used to cause physical harm, destruction, or intimidation. This includes conventional weapons, explosive devices, and improvised or everyday objects used with harmful intent.",
+      "crime act": "An act that violates criminal law, including but not limited to theft, assault, or fraud.",
+      "violent act": "Physical aggression intended to harm people, animals, or property, including acts of terror or intimidation.",
+      "manipulative act": "Any behavior aimed at covertly influencing, controlling, or deceiving others through psychological, emotional, social, or communicative means, with the intent to produce harm, coercion, or exploitation. This includes gaslighting, social pressure, emotional blackmail, misinformation, and deceptive persuasion techniques.",
+      "sexual content": "Material that depicts, describes, or alludes to sexual acts or nudity, including explicit sexual behavior.",
+      "minor abuse": "Any form of physical, emotional, or sexual mistreatment, exploitation, or endangerment of a child.",
+      "substance abuse": "The harmful or excessive use of psychoactive substances, including alcohol and drugs, that lead to physical or mental harm.",
+      "illicit drug": "A substance banned by law due to its potential for abuse, harm, or addiction.",
+      "drug trafficking": "The illegal production, transportation, sale, or distribution of controlled or illicit substances."
+    }
+  },
+  "TARGETS": {
+    "description": "Entities,living beings, organizations, locations, objects, digital constructs, or abstract concepts?that are the focus or recipient of harm, discrimination, or attack.",
+    "categories": {
+      "target living being": "Any living being explicitly mentioned as the subject or recipient of an action or behavior.",
+      "target organization": "A business, institution, or organized body that is the focus of the action.",
+      "target location": "A geographical area or place identified as the subject of the action.",
+      "target physical object": "A physical item or object referenced as the target of an action.",
+      "target digital entity": "A digital or fictional construct that is the focus or recipient of a harmful, manipulative, or questionable action. This includes software, online platforms, digital media, video games, fictional characters, and virtual identities.",
+      "target abstract": "An intangible or conceptual entity being referenced or targeted in the query, such as ideas, ideologies, emotions, or systemic constructs."
+    }
+  },
+  "NEUTRAL": {
+    "description": "Spans that may contain terms or references associated with harmful content but are used in a context that is benign, non-malicious, or ambiguous. This includes technical or educational information, metaphoric or fictional expressions, quotations or references to external content, and cases where harmful intent cannot be reliably determined.",
+    "categories": {
+      "technical or educational": "Includes content that is factual, scientific, historical, instructional, or informative in nature.",
+      "metaphoric or fictional content": "Includes figurative language, symbolic expressions, fictional narratives, or hypothetical scenarios where harmful terms are used in a non-literal or imaginative context.",
+      "harmless": "An entity or action that may superficially resemble harmful or malicious content but is either clearly benign, non-threatening, or whose harmful intent is unclear or cannot be reliably determined due to insufficient context."
+    
+    }
+  }
+}
