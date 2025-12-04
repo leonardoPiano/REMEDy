@@ -52,6 +52,15 @@ Below the full taxonomy
 ./output/parsed         --> Contains all the output from all the runned experiments
 
 ~~~
+# Disclaimer ⚠️
+The REMEDy dataset may include content that is **offensive or emotionally distressing**. Topics covered include, but are not limited to, **discriminatory language**, references to **abuse**, **violence**, **self-harm**, **drugs**, and other **sensitive material**.
+
+Please engage with the dataset only within your own personal comfort and risk tolerance. The material is provided solely for **research purposes**, particularly for work aimed at reducing harmful model behavior. **The views expressed in the dataset do not represent the views of any organizations or authors involved in the project.**
+
+
+
+
+
 
 
 
