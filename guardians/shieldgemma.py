@@ -1,63 +1,74 @@
+"""ShieldGemma baseline inference."""
 import os
-os.environ["CUDA_DEVICE_ORDER"] = "PCI_BUS_ID"
-os.environ['CUDA_VISIBLE_DEVICES']="0"
-from dotenv import load_dotenv
-from utils.datasetLoader import *
-from .prompts.shieldgemma_guide import guideline
-from transformers import AutoTokenizer, AutoModelForCausalLM
-import torch
-from tqdm import tqdm
 import json
+import sys
+import argparse
+from tqdm import tqdm
 
-load_dotenv(dotenv_path="../.env")
-HF_TOKEN=os.environ.get("HF_TOKEN")
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))
+from dotenv import load_dotenv
 
-def predict(prompt):
-    chat = [{"role": "user", "content": prompt}]
-    inputs = tokenizer.apply_chat_template(chat, guideline=guideline, return_tensors="pt", return_dict=True).to(
-        model.device)
 
-    with torch.no_grad():
-        logits = model(**inputs).logits
-   # Extract the logits for the Yes and No tokens
+load_dotenv()
+HF_TOKEN = os.environ.get("HF_TOKEN")
+
+import torch
+from transformers import AutoTokenizer, AutoModelForCausalLM
+
+from utils.datasetLoader import load_wildguard, loadToxicChat, loadAegis, loadOrBenchHard, loadRemedyTest
+from .prompts.shieldgemma_guide import guideline
+
+
+MODEL_ID = "google/shieldgemma-9b"
+MODEL_NAME = "shieldgemma"
+
+
+def run(fold: int = 0, cuda_device: str = "0"):
+    os.environ["CUDA_DEVICE_ORDER"] = "PCI_BUS_ID"
+    os.environ["CUDA_VISIBLE_DEVICES"] = cuda_device
+
+    out_path = f"output/fold-{fold}/parsed/GUARD/{MODEL_NAME}"
+    os.makedirs(out_path, exist_ok=True)
+
+    tokenizer = AutoTokenizer.from_pretrained(MODEL_ID)
+    model = AutoModelForCausalLM.from_pretrained(MODEL_ID, device_map="auto", torch_dtype=torch.bfloat16)
     vocab = tokenizer.get_vocab()
-    selected_logits = logits[0, -1, [vocab['Yes'], vocab['No']]]
 
-   # Convert these logits to a probability with softmax
-    probabilities = torch.softmax(selected_logits, dim=0)
+    def predict(prompt: str) -> int:
+        chat = [{"role": "user", "content": prompt}]
+        inputs = tokenizer.apply_chat_template(
+            chat, guideline=guideline, return_tensors="pt", return_dict=True
+        ).to(model.device)
+        with torch.no_grad():
+            logits = model(**inputs).logits
+        selected = logits[0, -1, [vocab["Yes"], vocab["No"]]]
+        prob_yes = torch.softmax(selected, dim=0)[0].item()
+        return int(prob_yes > 0.5)
 
-   # Return probability of 'Yes'
-    score = probabilities[0].item()
+    datasets = {
+        "Remedy": loadRemedyTest(fold),
+        "WildGuard": load_wildguard(),
+        "ToxicChat": loadToxicChat(),
+        "Aegis": loadAegis(),
+        "OrBench": loadOrBenchHard(),
+    }
 
-    return score>0.50
-
-if __name__=="__main__":
-     tokenizer = AutoTokenizer.from_pretrained("google/shieldgemma-9b")
-     model = AutoModelForCausalLM.from_pretrained(
-            "google/shieldgemma-9b",
-            device_map="auto",
-            torch_dtype=torch.bfloat16,
-        )
-
-     datasets = {"Remedy": loadRemedyTest(), "WildGuard": (load_wildguard()), "ToxicChat": (loadToxicChat()),
-               "Aegis": (loadAegis()),
-               "OrBench": (loadOrBenchHard())}
-    
-     out_path="output/parsed/GUARD/shieldgemma/"
-    
-     if not os.path.exists(out_path):
-        os.mkdir(out_path)   
-     
-     for name, values in datasets.items():
-        predictions = []
-        print("Processing", name)
-        prompts, labels, *df = values
-
-        for prompt,label in tqdm(zip(prompts,labels)):
-            predicted=int(predict(prompt))
-            predictions.append({"text": prompt, "pred": predicted, "real": label})
-        
-        with open(f"{out_path}/{name}.json", "w") as f:
+    for name, values in datasets.items():
+        print(f"Processing {name}")
+        prompts, labels, *_ = values
+        predictions = [
+            {"text": p, "pred": predict(p), "real": l}
+            for p, l in tqdm(zip(prompts, labels), total=len(prompts))
+        ]
+        out_file = os.path.join(out_path, f"{name}.json")
+        with open(out_file, "w") as f:
             json.dump(predictions, f, indent=2)
+        print(f"  → saved {out_file}")
 
 
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--fold", type=int, default=0)
+    parser.add_argument("--cuda", type=str, default="0")
+    args = parser.parse_args()
+    run(fold=args.fold, cuda_device=args.cuda)
