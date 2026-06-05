@@ -48,8 +48,6 @@ REMEDy is designed to support fine-grained, rationale-aware LLM safety moderatio
 
 ## Results
 
-All metrics are **F1** unless otherwise noted. FT results are averaged over **3-fold cross-validation** (mean ± std). Zero-Shot and Guardian results are evaluated on fold-0.
-
 ### Prompt Classification — (F1)
 
 | Model | Remedy | ToxicChat | AEGIS | OR-Bench-hard |
