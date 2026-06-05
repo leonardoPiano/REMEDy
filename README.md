@@ -1,12 +1,27 @@
-# REMEDy: Rationale Extraction for Moderation and Explainability of Dialogue Prompts
+# REMEDy: A Dataset for Rationale Extraction and Span-Based Moderation of Dialogue Prompts
 
 ## Abstract
 
-The wide adoption of conversational AI systems necessitates urgent and interpretable safety moderation, especially given that Large Language Models (LLMs) continue to exhibit vulnerabilities despite alignment efforts, posing significant risks to individual users, organisations, and society.
-
-The ideal AI safety moderation system must be transparent and structurally interpretable. However, current moderation approaches typically rely on coarse classifications that offer limited interpretability and fail to capture the nuanced intent and contextual dependencies present in real-world user inputs. To advance moderation beyond these coarse labels, we present **REMEDy**, a novel dataset specifically built for extracting fine-grained rationales from user prompts. REMEDy features span-level annotations covering a broad taxonomy of safety-relevant categories, allowing for overlapping and nested textual spans to reflect complex prompt structures.
-
-Using REMEDy, we fine-tune multiple LLMs and span-based models and evaluate their performance across two tasks: **(i) rationale extraction**, assessing their ability to accurately localise and classify harmful or ambiguous content; and **(ii) prompt moderation**, measuring improvements over state-of-the-art safety detectors. Our experiments demonstrate that REMEDy-trained models achieve competitive or superior moderation outcomes while simultaneously providing structured, human-readable rationales. REMEDy thus offers a valuable resource for developing safer, more transparent, and context-sensitive moderation systems.
+The wide adoption of conversational AI systems necessitates urgent and inter-
+pretable safety moderation, especially given that Large Language Models (LLMs)
+continue to exhibit vulnerabilities despite alignment efforts, posing significant
+risks to individual users, organisations, and society. The ideal AI safety modera-
+tion system must be transparent and structurally interpretable. However, current
+moderation approaches typically rely on coarse classifications that offer limited
+interpretability and fail to capture the nuanced intent and contextual dependen-
+cies present in real-world user inputs. To advance moderation beyond these coarse
+labels, we present REMEDy, a novel dataset specifically built for extracting fine-
+grained rationales from user prompts. REMEDy features span-level annotations
+covering a broad taxonomy of safety-relevant categories, allowing for overlapping
+and nested textual spans to reflect complex prompt structures. Using REMEDy,
+we fine-tune multiple LLMs and evaluate their performance across two tasks:
+(i) rationale extraction, assessing their ability to accurately localise and classify
+harmful or ambiguous content; and (ii) prompt moderation, measuring improve-
+ments over state-of-the-art safety detectors. Our experiments demonstrate that
+REMEDy-trained models achieve competitive or superior moderation outcomes
+while simultaneously providing structured, human-readable rationales. REM-
+EDy thus offers a valuable resource for developing safer, more transparent, and
+context-sensitive moderation systems
 
 ---
 
@@ -105,8 +120,6 @@ REMEDy is designed to support fine-grained, rationale-aware LLM safety moderatio
 
 
 ### Multi-Turn Moderation — CoSafe (Accuracy)
-
-CoSafe contains exclusively harmful multi-turn conversations; precision measures the rejection rate per category.
 
 | Category | gemma2 FT |
 |---|---|
