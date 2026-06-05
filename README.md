@@ -50,49 +50,63 @@ REMEDy is designed to support fine-grained, rationale-aware LLM safety moderatio
 
 All metrics are **F1** unless otherwise noted. FT results are averaged over **3-fold cross-validation** (mean ± std). Zero-Shot and Guardian results are evaluated on fold-0.
 
-### Prompt Classification — Standard Benchmarks
+### Prompt Classification — (F1)
 
-| Model | Type | REMEDy | Aegis | ToxicChat | OrBench (ACC) |
-|---|---|---|---|---|---|
-| **gemma2** | FT | **0.976** ±.002 | **0.875** ±.003 | 0.742 ±.015 | 0.749 ±.060 |
-| **mistral** | FT | 0.969 ±.001 | 0.860 ±.025 | 0.737 ±.032 | 0.699 ±.063 |
-| **llama3.1-8** | FT | 0.963 ±.005 | 0.859 ±.021 | 0.721 ±.045 | 0.715 ±.022 |
-| **llama3.2-3** | FT | 0.957 ±.007 | 0.832 ±.022 | 0.724 ±.028 | **0.815** ±.032 |
-| **nuner** | FT | 0.939 ±.015 | 0.838 ±.012 | 0.701 ±.021 | 0.675 ±.020 |
-| **gliner** | FT | 0.932 ±.006 | 0.836 ±.014 | 0.719 ±.004 | 0.713 ±.037 |
-| | | | | | |
-| llama3.3-70 | Zero-Shot | 0.917 | 0.844 | 0.701 | 0.500 |
-| gpt-4o-mini | Zero-Shot | 0.903 | 0.862 | 0.640 | 0.128 |
-| gemma2 | Zero-Shot | 0.902 | 0.855 | 0.618 | 0.147 |
-| mistral | Zero-Shot | 0.884 | 0.788 | 0.649 | 0.757 |
-| llama3.1-8 | Zero-Shot | 0.874 | 0.775 | 0.564 | 0.769 |
-| llama3.2-3 | Zero-Shot | 0.859 | 0.733 | 0.549 | 0.810 |
-| | | | | | |
-| wildguard | Guardian | 0.956 | 0.894 | 0.653 | 0.258 |
-| duo\_LLama3.2 | Guardian | 0.874 | 0.826 | 0.639 | 0.771 |
-| duo\_1.5 | Guardian | 0.871 | 0.803 | 0.642 | 0.776 |
-| llamaguard | Guardian | 0.846 | 0.715 | 0.485 | 0.814 |
-| duo\_0.5 | Guardian | 0.829 | 0.780 | 0.680 | 0.773 |
-| shieldgemma | Guardian | 0.790 | 0.757 | 0.668 | 0.737 |
+| Model | Remedy | ToxicChat | AEGIS | OR-Bench-hard |
+|---------|--------:|--------:|--------:|--------:|
+| *Guardian models* | | | | |
+| LlamaGuard3-8b | 0.83 | 0.54 | 0.72 | 0.81 |
+| ShieldGemma-9b | 0.79 | 0.68 | 0.76 | 0.74 |
+| WildGuard-7b | 0.96 | 0.70 | 0.89 | 0.29 |
+| QwenDuoGuard-0.5b | 0.83 | 0.70 | 0.78 | 0.77 |
+| QwenDuoGuard-1.5b | 0.87 | 0.66 | 0.80 | 0.78 |
+| LlamaDuoGuard-1b | 0.87 | 0.65 | 0.83 | 0.77 |
+| *Zero-shot* | | | | |
+| Llama3.2-3b | 0.86 | 0.60 | 0.73 | 0.81 |
+| Llama3.1-8b | 0.87 | 0.58 | 0.77 | 0.77 |
+| Gemma2-9b | 0.90 | 0.68 | 0.85 | 0.15 |
+| Mistral-7b-v0.3 | 0.88 | 0.69 | 0.78 | 0.75 |
+| Llama3.3-70b | 0.92 | 0.72 | 0.84 | 0.50 |
+| GPT-4o-mini | 0.90 | 0.68 | 0.86 | 0.13 |
+| *Fine-tuned* | | | | |
+| Llama3.2-3b | 0.96 | 0.75 | 0.83 | **0.82** |
+| Llama3.1-8b | 0.96 | 0.72 | 0.86 | 0.71 |
+| Gemma2-9b | **0.98** | **0.78** | **0.87** | 0.75 |
+| Mistral-7b-v0.3 | 0.97 | **0.78** | 0.86 | 0.70 |
+| *Span classifiers* | | | | |
+| NuNER-Zero-span | 0.94 | 0.70 | 0.84 | 0.67 |
+| GliNER-large | 0.93 | 0.74 | 0.84 | 0.71 |
+
+
+
 
 ### WildGuard Out-of-Domain (F1)
+| Model | Overall F1 | Vanilla F1 | Adversarial F1 |
+|---------|--------:|--------:|--------:|
+| *Guardian models* | | | |
+| LlamaGuard3-8b | 0.77 | 0.87 | 0.62 |
+| ShieldGemma-9b | 0.56 | 0.66 | 0.41 |
+| QwenDuoGuard-0.5b | 0.77 | 0.78 | 0.75 |
+| QwenDuoGuard-1.5b | 0.78 | 0.80 | 0.74 |
+| LlamaDuoGuard-1b | 0.82 | 0.84 | 0.79 |
+| *Zero-shot* | | | |
+| Llama3.2-3b | 0.68 | 0.79 | 0.52 |
+| Llama3.1-8b | 0.71 | 0.84 | 0.50 |
+| Gemma2-9b | 0.84 | 0.91 | 0.77 |
+| Mistral-7b-v0.3 | 0.78 | 0.87 | 0.63 |
+| Llama3.3-70b | **0.86** | 0.91 | 0.80 |
+| GPT-4o-mini | **0.86** | 0.90 | **0.82** |
+| *Fine-tuned* | | | |
+| Llama3.2-3b | 0.81 | 0.89 | 0.71 |
+| Llama3.1-8b | 0.85 | **0.93** | 0.75 |
+| Gemma2-9b | 0.86 | 0.92 | 0.79 |
+| Mistral-7b-v0.3 | 0.83 | 0.90 | 0.74 |
+| *Span classifiers* | | | |
+| NuNER-Zero-span | 0.69 | 0.82 | 0.49 |
+| GliNER-large | 0.72 | 0.83 | 0.56 |
 
-| Model | Type | Overall | Vanilla | Adversarial |
-|---|---|---|---|---|
-| **wildguard** | Guardian | **0.887** | **0.916** | **0.852** |
-| **gemma2** | FT | 0.862 ±.016 | 0.922 ±.008 | 0.790 ±.031 |
-| mistral | FT | 0.830 ±.024 | 0.904 ±.010 | 0.740 ±.048 |
-| llama3.1-8 | FT | 0.835 ±.019 | 0.914 ±.015 | 0.734 ±.044 |
-| llama3.2-3 | FT | 0.810 ±.000 | 0.894 ±.002 | 0.714 ±.002 |
-| gemma2 | Zero-Shot | 0.842 | 0.908 | 0.769 |
-| duo\_LLama3.2 | Guardian | 0.823 | 0.845 | 0.798 |
-| duo\_1.5 | Guardian | 0.778 | 0.808 | 0.742 |
-| duo\_0.5 | Guardian | 0.768 | 0.784 | 0.750 |
-| llamaguard | Guardian | 0.767 | 0.870 | 0.620 |
-| gliner | FT | 0.718 ±.007 | 0.827 ±.005 | 0.557 ±.030 |
-| shieldgemma | Guardian | 0.559 | 0.660 | 0.406 |
 
-### Multi-Turn Moderation — CoSafe (Precision, fold-0)
+### Multi-Turn Moderation — CoSafe (Accuracy)
 
 CoSafe contains exclusively harmful multi-turn conversations; precision measures the rejection rate per category.
 
