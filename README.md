@@ -141,26 +141,23 @@ REMEDy is designed to support fine-grained, rationale-aware LLM safety moderatio
 
 ### Ablation Study (fold-0, F1)
 
-Impact of rationale annotation on classification performance.
+**Impact of rationale annotation on classification performance.**
 
-| Model | Variant | REMEDy | Aegis | ToxicChat | WildGuard Overall |
-|---|---|---|---|---|---|
-| **gemma2** | Full (w/ rationales) | **0.979** | 0.872 | **0.759** | 0.843 |
-| **gemma2** | No Harmless | 0.974 | 0.872 | 0.730 | **0.867** |
-| **gemma2** | No Rationale | 0.962 | **0.884** | 0.720 | 0.856 |
-| mistral | Full (w/ rationales) | **0.969** | 0.860 | **0.749** | 0.843 |
-| mistral | No Harmless | 0.957 | 0.827 | 0.767 | 0.839 |
-| mistral | No Rationale | 0.963 | **0.866** | 0.736 | **0.859** |
-| llama3.2-3 | Full (w/ rationales) | **0.964** | 0.823 | 0.718 | 0.810 |
-| llama3.2-3 | No Harmless | 0.951 | 0.829 | **0.753** | 0.804 |
-| llama3.2-3 | No Rationale | 0.951 | **0.840** | 0.738 | **0.834** |
+| Model | Variant | REMEDy (F1) | AEGIS (F1) | ToxicChat (F1) | OR-Bench (Acc) | WildGuard (Overall F1) |
+|---|---|---:|---:|---:|---:|---:|
+| **gemma2** | Full (w/ rationales) | **0.979** | 0.872 | **0.759** | **0.820** | 0.843 |
+| **gemma2** | No Harmless | 0.974 | 0.872 | 0.730 | 0.640 | **0.867** |
+| **gemma2** | No Rationale | 0.962 | **0.884** | 0.720 | 0.680 | 0.856 |
+| **mistral** | Full (w/ rationales) | **0.969** | 0.860 | 0.749 | **0.700** | 0.843 |
+| **mistral** | No Harmless | 0.957 | 0.827 | **0.767** | 0.690 | 0.839 |
+| **mistral** | No Rationale | 0.963 | **0.866** | 0.736 | 0.660 | **0.859** |
+| **llama3.2-3** | Full (w/ rationales) | **0.964** | 0.823 | 0.718 | **0.830** | 0.810 |
+| **llama3.2-3** | No Harmless | 0.951 | 0.829 | **0.753** | 0.730 | 0.804 |
+| **llama3.2-3** | No Rationale | 0.951 | **0.840** | 0.738 | 0.680 | **0.834** |
 
 > **Full** = trained with complete rationale annotation (malicious + target + neutral spans).  
 > **No Harmless** = rationales excluding neutral (harmless) spans.  
 > **No Rationale** = label-only supervision, no span annotation.
-
----
-
 ## Repository Structure
 
 ```
